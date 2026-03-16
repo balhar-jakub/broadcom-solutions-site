@@ -1,0 +1,44 @@
+title: Broadcom Mainframe Solutions
+description: >-
+  A catalog of Broadcom solutions that integrate with the Zowe API Mediation Layer
+  or provide a VS Code extension for mainframe development.
+baseurl: ""
+url: ""
+
+theme: minima
+
+# Collections
+collections:
+  solutions:
+    output: true
+    permalink: /solutions/:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: "solutions"
+    values:
+      layout: "solution"
+
+# Navigation links shown in the site header
+header_pages:
+  - index.md
+  - api-ml.md
+  - vscode.md
+  - about.md
+
+minima:
+  skin: classic
+  social_links: []
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Exclude build artifacts
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - .gitignore
+  - vendor/

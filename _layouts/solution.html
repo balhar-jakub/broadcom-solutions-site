@@ -1,0 +1,93 @@
+---
+layout: default
+---
+
+<article class="solution-detail">
+  <header class="solution-header">
+    <div class="solution-title-row">
+      <h1>{{ page.title }}</h1>
+      <div class="solution-badges">
+        {% if page.api_ml %}
+          <span class="badge badge-apiml" title="Integrates with API Mediation Layer">API ML</span>
+        {% endif %}
+        {% if page.vscode %}
+          <span class="badge badge-vscode" title="Has a VS Code extension">VS Code</span>
+        {% endif %}
+      </div>
+    </div>
+    <p class="solution-tagline">{{ page.tagline }}</p>
+    <div class="solution-tags">
+      {% for tag in page.tags %}
+        <span class="tag">{{ tag }}</span>
+      {% endfor %}
+    </div>
+  </header>
+
+  <div class="solution-links">
+    {% if page.marketplace_url %}
+      <a href="{{ page.marketplace_url }}" class="btn btn-vscode" target="_blank" rel="noopener">
+        VS Code Marketplace
+      </a>
+    {% endif %}
+    {% if page.github_url %}
+      <a href="{{ page.github_url }}" class="btn btn-github" target="_blank" rel="noopener">
+        GitHub
+      </a>
+    {% endif %}
+    {% if page.npm_package %}
+      <a href="https://www.npmjs.com/package/{{ page.npm_package }}" class="btn btn-npm" target="_blank" rel="noopener">
+        npm
+      </a>
+    {% endif %}
+    {% if page.docs_url %}
+      <a href="{{ page.docs_url }}" class="btn btn-docs" target="_blank" rel="noopener">
+        Documentation
+      </a>
+    {% endif %}
+  </div>
+
+  <div class="solution-body">
+    {{ content }}
+  </div>
+
+  {% if page.api_ml or page.vscode %}
+  <div class="solution-meta-table">
+    <h2>Integration Summary</h2>
+    <table>
+      <tr>
+        <th>Integration</th>
+        <th>Status</th>
+        <th>Details</th>
+      </tr>
+      {% if page.api_ml %}
+      <tr>
+        <td>API Mediation Layer</td>
+        <td><span class="badge badge-apiml">Yes</span></td>
+        <td>{{ page.api_ml_details | default: "Integrates with the Zowe API Gateway and uses token-based authentication." }}</td>
+      </tr>
+      {% endif %}
+      {% if page.vscode %}
+      <tr>
+        <td>VS Code Extension</td>
+        <td><span class="badge badge-vscode">Yes</span></td>
+        <td>
+          {% if page.marketplace_url %}
+            Available on the <a href="{{ page.marketplace_url }}" target="_blank" rel="noopener">VS Code Marketplace</a>
+            {% if page.marketplace_publisher %} under publisher <code>{{ page.marketplace_publisher }}</code>{% endif %}.
+          {% else %}
+            Available on the VS Code Marketplace.
+          {% endif %}
+        </td>
+      </tr>
+      {% endif %}
+      {% if page.zowe_conformant %}
+      <tr>
+        <td>Zowe Conformance</td>
+        <td><span class="badge badge-conformant">Conformant</span></td>
+        <td>{{ page.zowe_conformant }}</td>
+      </tr>
+      {% endif %}
+    </table>
+  </div>
+  {% endif %}
+</article>

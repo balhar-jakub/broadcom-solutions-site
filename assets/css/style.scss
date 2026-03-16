@@ -1,0 +1,159 @@
+---
+---
+
+@import "minima";
+
+// ── Variables ──────────────────────────────────────────────────────────────
+$color-apiml:      #c00;
+$color-vscode:     #007acc;
+$color-conformant: #2e7d32;
+$color-tag:        #555;
+$color-btn-github: #24292e;
+$color-btn-npm:    #cc3534;
+$color-btn-docs:   #4a4a8a;
+
+// ── Badges ─────────────────────────────────────────────────────────────────
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+  vertical-align: middle;
+}
+.badge-apiml      { background: $color-apiml; }
+.badge-vscode     { background: $color-vscode; }
+.badge-conformant { background: $color-conformant; }
+
+// ── Tags ───────────────────────────────────────────────────────────────────
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  margin: 2px 3px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  background: #eee;
+  color: $color-tag;
+  border: 1px solid #ccc;
+}
+
+// ── Buttons ────────────────────────────────────────────────────────────────
+.btn {
+  display: inline-block;
+  padding: 6px 14px;
+  margin: 4px 6px 4px 0;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff !important;
+  text-decoration: none !important;
+  transition: opacity 0.15s;
+  &:hover { opacity: 0.85; }
+}
+.btn-vscode  { background: $color-vscode; }
+.btn-github  { background: $color-btn-github; }
+.btn-npm     { background: $color-btn-npm; }
+.btn-docs    { background: $color-btn-docs; }
+
+// ── Solution detail page ───────────────────────────────────────────────────
+.solution-header {
+  border-bottom: 1px solid #e8e8e8;
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+.solution-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  h1 { margin: 0; }
+}
+.solution-tagline {
+  color: #555;
+  font-style: italic;
+  margin: 0.4rem 0 0.6rem;
+}
+.solution-links {
+  margin: 1.2rem 0;
+}
+.solution-body {
+  margin-top: 1.5rem;
+}
+.solution-meta-table {
+  margin-top: 2rem;
+  h2 { font-size: 1.1rem; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px 12px;
+      text-align: left;
+    }
+    th { background: #f4f4f4; font-weight: 700; }
+  }
+}
+
+// ── Catalog cards (index pages) ────────────────────────────────────────────
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.2rem;
+  margin-top: 1.5rem;
+}
+.solution-card {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 1.1rem 1.2rem;
+  background: #fafafa;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  transition: box-shadow 0.15s;
+  &:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+
+  h3 {
+    margin: 0;
+    font-size: 1rem;
+    a { text-decoration: none; color: #333; }
+    a:hover { color: $color-vscode; }
+  }
+  .card-tagline {
+    font-size: 0.82rem;
+    color: #666;
+    flex-grow: 1;
+  }
+  .card-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+  .card-tags   { display: flex; gap: 4px; flex-wrap: wrap; }
+}
+
+// ── Page intro ─────────────────────────────────────────────────────────────
+.page-intro {
+  background: #f0f4f8;
+  border-left: 4px solid $color-vscode;
+  padding: 0.9rem 1.2rem;
+  margin-bottom: 1.5rem;
+  border-radius: 0 4px 4px 0;
+  font-size: 0.92rem;
+  color: #333;
+}
+.page-intro.apiml {
+  border-left-color: $color-apiml;
+}
+
+// ── Filter bar ─────────────────────────────────────────────────────────────
+.filter-bar {
+  margin: 1rem 0;
+  label { font-weight: 600; margin-right: 6px; }
+  input[type="text"] {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    width: 260px;
+  }
+}
