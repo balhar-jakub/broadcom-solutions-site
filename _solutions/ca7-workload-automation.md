@@ -13,6 +13,13 @@ npm_package: "@broadcom/ca7-for-zowe-cli"
 docs_url: https://techdocs.broadcom.com/us/en/ca-mainframe-software/automation/ca-7-workload-automation-aia/12-1.html
 ---
 
+## Server-Side Requirements
+
+CA 7 Workload Automation requires:
+
+1. **CA 7** installed on z/OS as a started task.
+2. **CA 7 Web Services / REST API** — a web application component of CA 7 that must be explicitly enabled and configured. It is not started automatically with the main CA 7 address space.
+
 ## Overview
 
 **CA 7 Workload Automation** is Broadcom's enterprise job scheduling product for IBM z/OS. It manages the end-to-end lifecycle of batch workloads — definition, scheduling, dependency management, execution, and exception handling — across z/OS and distributed platforms.
@@ -31,10 +38,12 @@ Key capabilities:
 
 The CA 7 REST API can be onboarded to the API Mediation Layer as a registered microservice:
 
-1. Configure the CA 7 REST API to register with the API ML Discovery Service using a YAML service definition.
-2. The API Gateway routes requests to CA 7 using the assigned `serviceId`.
-3. The API Catalog displays CA 7's OpenAPI documentation for self-service discovery.
-4. Authentication uses APIML token-based SSO — no per-command credential required when using the Zowe CLI plugin.
+1. Create a **static YAML service definition** for CA 7 and place it in the API ML's configured static definition directory on z/OS. This file describes the CA 7 service endpoint, `serviceId`, and metadata for the API Catalog.
+2. The **API ML Discovery Service** picks up the definition at startup (or on a refresh). From this point the **API Gateway** routes requests to CA 7 using the assigned `serviceId`.
+3. The **API Catalog** displays CA 7's OpenAPI documentation for self-service discovery.
+4. **APIML token-based SSO** eliminates per-command credential prompts when using the Zowe CLI plugin.
+
+> **Note:** CA 7 does not use the Zowe onboarding SDK for self-registration. The static YAML definition approach is the supported method.
 
 ## Zowe CLI Plugin
 

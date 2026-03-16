@@ -25,9 +25,16 @@ Key features:
 - **Batch support** — debug batch jobs running under InterTest Batch.
 - **Multi-language** — handles mixed-language programs (COBOL calling HLASM, etc.).
 
-## Server-Side Requirement
+## Server-Side Requirements
 
-This extension requires a licensed installation of **CA InterTest for CICS** or **CA InterTest Batch** on the target z/OS system. The extension communicates with the InterTest Debug Manager over a TCP/IP connection configured in the VS Code launch profile.
+This extension requires one or both of the following licensed products installed on z/OS:
+
+- **CA InterTest for CICS** — for debugging CICS transactions interactively.
+- **CA InterTest Batch** — for debugging batch jobs under JES.
+
+Both products install a **Debug Manager** component that listens on a configurable TCP/IP port. The VS Code `launch.json` debug configuration must specify the Debug Manager host and port. Each InterTest product (CICS and Batch) uses a separately configured port, so if both are used, two separate launch configurations are needed.
+
+**Language support scope:** COBOL, PL/I, and HLASM are supported. HLASM debugging is supported as a called language within a mixed-language program (e.g., COBOL calling an HLASM subroutine); standalone HLASM batch debugging support varies by InterTest version — consult the [Code4z TechDocs](https://techdocs.broadcom.com/us/en/ca-mainframe-software/devops/code4z/2-0.html) for your specific release.
 
 ## Extension Details
 

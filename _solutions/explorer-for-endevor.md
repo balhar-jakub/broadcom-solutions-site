@@ -5,9 +5,10 @@ tags: [vscode, api-ml, scm, endevor, source-control]
 api_ml: true
 api_ml_details: >-
   Explorer for Endevor connects to Endevor Web Services through the API Mediation
-  Layer. It supports API ML base profiles and PassTicket-based token authentication,
-  meaning a single API ML SSO token grants access to Endevor without re-entering
-  credentials.
+  Layer. It supports API ML base profiles: the client authenticates to the API ML
+  Gateway and receives a JWT (apimlAuthenticationToken), which is then used for all
+  subsequent requests. The API ML internally uses PassTickets to authenticate to
+  Endevor Web Services on the client's behalf.
 vscode: true
 marketplace_url: https://marketplace.visualstudio.com/items?itemName=broadcomMFD.explorer-for-endevor
 marketplace_publisher: broadcomMFD
@@ -30,15 +31,30 @@ Highlighted features:
 - **Map-based navigation** — follow Endevor's map structure (from-to stage relationships).
 - **Bridge for Git** — works with the [Bridge for Git Explorer](../bridge-for-git-explorer/) to sync Endevor elements into Git repositories.
 
+## Server-Side Requirements
+
+Explorer for Endevor requires two server-side components on z/OS:
+
+1. **CA Endevor SCM** — the mainframe source control manager and its inventory database.
+2. **Endevor Web Services** — the REST API layer that exposes Endevor operations over HTTPS. This must be deployed and running as a separate web application (typically on a Liberty or Tomcat server on z/OS) before the VS Code extension can connect.
+
+When Endevor Web Services is registered with the **API ML Discovery Service**, it is accessible through the API ML Gateway at a consistent URL. Without API ML, the extension connects directly to the Endevor Web Services host and port.
+
 ## API Mediation Layer Integration
 
-Explorer for Endevor communicates with Endevor Web Services. When those services are registered behind the **API ML Gateway**, the extension routes all traffic through the gateway and can use an APIML Authentication Token (PassTicket or JWT) to authenticate. This means:
+Explorer for Endevor communicates with Endevor Web Services through the **API ML Gateway** when a Zowe `base` profile is configured. The authentication flow is:
+
+1. The client (VS Code / Zowe CLI) authenticates to the API ML Gateway with a username and password and receives a **JWT** (`apimlAuthenticationToken`).
+2. All subsequent requests to Endevor Web Services are routed through the Gateway, carrying this JWT.
+3. The API ML Gateway internally generates a **PassTicket** and passes it to Endevor Web Services on the client's behalf — PassTickets are a server-to-server mechanism and are not handled by the client directly.
+
+This means:
 
 - No direct credentials stored per-Endevor-connection when using API ML.
-- SSO across all Code4z tools that share the same Zowe base profile.
+- SSO across all Code4z tools that share the same Zowe `base` profile.
 - MFA compatibility through the API ML login flow.
 
-Configure the integration by creating a Zowe team config `base` profile pointing to your API ML instance and referencing it in your Endevor connection profile.
+**Configuration:** Create a Zowe team config `base` profile pointing to your API ML Gateway host and port, then reference it in your Endevor connection profile.
 
 ## Zowe CLI Plugin
 

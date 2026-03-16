@@ -8,9 +8,17 @@ api_ml_details: >-
   the API Mediation Layer Discovery Service. Zowe CLI operations authenticate
   through the API ML Gateway, supporting SSO across all Broadcom Zowe integrations.
 vscode: false
-npm_package: "@broadcom/mat-detect-for-zowe-cli"
+npm_package: "@broadcom/mat-detect-for-zowe-cli @broadcom/mat-analyze-for-zowe-cli"
 docs_url: https://techdocs.broadcom.com/us/en/ca-mainframe-software/devops/mainframe-application-tuner/11-5.html
 ---
+
+## Server-Side Requirements
+
+MAT requires the following on z/OS:
+
+1. **Broadcom MAT** — the core product, installed as a started task on z/OS.
+2. **MAT REST API server** — a separate API server process (included with MAT) that must be explicitly started. It exposes two distinct endpoints: the **MAT Detect API** and the **MAT Analyze API**.
+3. **APF-authorized libraries** — MAT collects performance data using privileged z/OS facilities. The MAT load library must be APF-authorized, and the started task user ID requires appropriate RACF (or equivalent) permissions to perform cross-memory monitoring.
 
 ## Overview
 
@@ -30,11 +38,11 @@ Key capabilities:
 
 ## API Mediation Layer Integration
 
-Both MAT Detect and MAT Analyze REST services can be onboarded to the API ML. Once registered:
+Both the MAT Detect and MAT Analyze REST services are onboarded to the API ML separately, each with its own `serviceId`. Onboarding is performed via a **static YAML service definition** placed on the API ML configuration file system. Once registered:
 
-- Services appear in the API Catalog with OpenAPI documentation.
-- The API Gateway routes requests to MAT using the assigned `serviceId`.
-- CLI operations use APIML token authentication — no per-command credentials required.
+- Each service appears independently in the **API Catalog** with its OpenAPI documentation.
+- The **API Gateway** routes requests to the appropriate MAT service using its assigned `serviceId`.
+- CLI operations use **APIML token authentication** — no per-command credentials required.
 
 ## Zowe CLI Plugins
 

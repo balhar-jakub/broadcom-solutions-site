@@ -23,9 +23,11 @@ Key features:
 - **Filter reports** — search by job name, abend code, date range, or program name.
 - **Side-by-side view** — view the abend report and source file simultaneously.
 
-## Server-Side Requirement
+## Server-Side Requirements
 
-Requires a licensed installation of **CA Abend-AID** on the target z/OS system. The extension communicates with the Abend-AID REST API over HTTPS.
+Requires a licensed installation of **CA Abend-AID** on the target z/OS system. CA Abend-AID must be configured with its **REST API component** enabled and running.
+
+The VS Code extension connects to the Abend-AID REST API using a **Zowe connection profile** (the same profile type used by Zowe Explorer). The host, port, and credentials are defined in the Zowe team config file (`zowe.config.json`) — there is no separate connection dialog within the extension itself. Ensure the Abend-AID REST API is accessible over HTTPS from the workstation where VS Code runs.
 
 ## Extension Details
 

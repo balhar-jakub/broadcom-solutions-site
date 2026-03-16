@@ -17,6 +17,15 @@ docs_url: https://docs.zowe.org/stable/user-guide/ze-install
 zowe_conformant: "Zowe Conformant — Explorer for VS Code (V3)"
 ---
 
+## Server-Side Requirements
+
+Zowe Explorer requires **z/OSMF (z/OS Management Facility)** to be installed, configured, and running on the target z/OS system. All core functions — data set access, USS file management, and JES job operations — are implemented via z/OSMF REST APIs. The following z/OSMF tasks must be active:
+
+- **z/OSMF Jobs REST services** — required for JES job submission and spool viewing.
+- **z/OSMF Data Set and File REST services** — required for data set and USS file operations.
+
+When using the **API Mediation Layer**, the z/OSMF service must additionally be registered with the API ML Discovery Service, or the extension must be configured with a `zosmf` service profile alongside the `base` API ML profile.
+
 ## Overview
 
 Zowe Explorer is the flagship VS Code extension of the [Zowe](https://zowe.org) open-source project, co-developed and sponsored by Broadcom. It brings the mainframe into the VS Code ecosystem, letting developers browse and edit z/OS resources without leaving their IDE.
@@ -31,7 +40,7 @@ Key capabilities include:
 
 ## API Mediation Layer Integration
 
-Zowe Explorer can authenticate through the **API Mediation Layer** instead of providing a username and password directly to each service. When a Zowe team configuration file includes a `base` profile pointing to the API ML Gateway, a single SSO token is obtained at login and reused across all service calls. This eliminates repeated password prompts and works seamlessly with MFA and PassTicket-based systems.
+Zowe Explorer can authenticate through the **API Mediation Layer** instead of providing a username and password directly to each service. When a Zowe team configuration file includes a `base` profile pointing to the API ML Gateway, a single SSO token is obtained at login and reused across all service calls. This eliminates repeated password prompts and is compatible with MFA. The API ML Gateway internally uses PassTickets to authenticate to downstream z/OSMF services on the client's behalf — this is a server-to-server mechanism transparent to the end user.
 
 To configure API ML authentication in Zowe Explorer:
 
