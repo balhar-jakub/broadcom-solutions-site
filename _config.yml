@@ -2,12 +2,12 @@ title: Broadcom Mainframe Solutions
 description: >-
   A catalog of Broadcom solutions that integrate with the Zowe API Mediation Layer
   or provide a VS Code extension for mainframe development.
-baseurl: ""
-url: ""
+baseurl: "/broadcom-solutions-site"
+url: "https://balhar-jakub.github.io"
 
-theme: minima
+# No theme — fully custom layouts
+# theme: minima
 
-# Collections
 collections:
   solutions:
     output: true
@@ -19,23 +19,16 @@ defaults:
       type: "solutions"
     values:
       layout: "solution"
-
-# Navigation links shown in the site header
-header_pages:
-  - index.md
-  - api-ml.md
-  - vscode.md
-  - about.md
-
-minima:
-  skin: classic
-  social_links: []
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
 
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
 
-# Exclude build artifacts
 exclude:
   - Gemfile
   - Gemfile.lock

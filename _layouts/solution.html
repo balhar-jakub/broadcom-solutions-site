@@ -2,92 +2,180 @@
 layout: default
 ---
 
-<article class="solution-detail">
-  <header class="solution-header">
-    <div class="solution-title-row">
-      <h1>{{ page.title }}</h1>
-      <div class="solution-badges">
-        {% if page.api_ml %}
-          <span class="badge badge-apiml" title="Integrates with API Mediation Layer">API ML</span>
-        {% endif %}
-        {% if page.vscode %}
-          <span class="badge badge-vscode" title="Has a VS Code extension">VS Code</span>
-        {% endif %}
+{% comment %}Determine icon class based on integrations{% endcomment %}
+{% if page.api_ml and page.vscode %}
+  {% assign icon_class = "icon-both" %}
+  {% assign icon_char = "⚡" %}
+{% elsif page.api_ml %}
+  {% assign icon_class = "icon-apiml" %}
+  {% assign icon_char = "🔗" %}
+{% elsif page.vscode %}
+  {% assign icon_class = "icon-vscode" %}
+  {% assign icon_char = "🧩" %}
+{% else %}
+  {% assign icon_class = "icon-tool" %}
+  {% assign icon_char = "🛠️" %}
+{% endif %}
+
+<!-- Page Hero -->
+<div class="page-hero">
+  <div class="content-width page-hero-content">
+    <nav aria-label="Breadcrumb" style="margin-bottom: 1rem;">
+      <span style="font-size:0.78rem; color:rgba(255,255,255,0.45);">
+        <a href="{{ '/' | relative_url }}" style="color:rgba(255,255,255,0.55); text-decoration:none;">All Solutions</a>
+        <span style="margin: 0 6px; opacity:0.4;">/</span>
+        <span style="color:rgba(255,255,255,0.85);">{{ page.title }}</span>
+      </span>
+    </nav>
+
+    <div style="display:flex; align-items:flex-start; gap:1.25rem; flex-wrap:wrap;">
+      <div class="card-icon {{ icon_class }}" style="width:56px; height:56px; font-size:1.6rem; flex-shrink:0; margin-top:4px;">
+        {{ icon_char }}
+      </div>
+      <div>
+        <div style="display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap; margin-bottom:0.5rem;">
+          {% if page.api_ml %}
+            <span class="badge badge-apiml">API ML</span>
+          {% endif %}
+          {% if page.vscode %}
+            <span class="badge badge-vscode">VS Code</span>
+          {% endif %}
+          {% if page.zowe_conformant %}
+            <span class="badge badge-conformant">Zowe Conformant</span>
+          {% endif %}
+        </div>
+        <h1 class="page-hero-title" style="margin-bottom:0.5rem;">{{ page.title }}</h1>
+        <p class="page-hero-desc">{{ page.tagline }}</p>
       </div>
     </div>
-    <p class="solution-tagline">{{ page.tagline }}</p>
-    <div class="solution-tags">
-      {% for tag in page.tags %}
-        <span class="tag">{{ tag }}</span>
-      {% endfor %}
+  </div>
+  <div class="page-hero-slash"></div>
+</div>
+
+<!-- Main content area -->
+<div class="site-section">
+  <div class="content-width">
+    <div class="solution-detail-layout">
+
+      <!-- Body -->
+      <article class="solution-body">
+        {{ content }}
+
+        {% if page.api_ml or page.vscode or page.zowe_conformant %}
+        <h2>Integration Summary</h2>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Integration</th>
+              <th>Status</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if page.api_ml %}
+            <tr>
+              <td><strong>API Mediation Layer</strong></td>
+              <td><span class="badge badge-apiml">Integrated</span></td>
+              <td>{{ page.api_ml_details | default: "Integrates with the Zowe API Gateway using token-based authentication." }}</td>
+            </tr>
+            {% endif %}
+            {% if page.vscode %}
+            <tr>
+              <td><strong>VS Code Extension</strong></td>
+              <td><span class="badge badge-vscode">Available</span></td>
+              <td>
+                {% if page.marketplace_url %}
+                  Published on the <a href="{{ page.marketplace_url }}" target="_blank" rel="noopener">VS Code Marketplace</a>
+                  {% if page.marketplace_publisher %} under publisher <code>{{ page.marketplace_publisher }}</code>{% endif %}.
+                {% else %}
+                  Available on the VS Code Marketplace.
+                {% endif %}
+              </td>
+            </tr>
+            {% endif %}
+            {% if page.zowe_conformant %}
+            <tr>
+              <td><strong>Zowe Conformance</strong></td>
+              <td><span class="badge badge-conformant">Conformant</span></td>
+              <td>{{ page.zowe_conformant }}</td>
+            </tr>
+            {% endif %}
+          </tbody>
+        </table>
+        {% endif %}
+      </article>
+
+      <!-- Sidebar -->
+      <aside class="solution-sidebar" aria-label="Quick links">
+
+        <!-- Links card -->
+        <div class="sidebar-card">
+          <h3>Quick Links</h3>
+          <div class="sidebar-links">
+            {% if page.marketplace_url %}
+            <a href="{{ page.marketplace_url }}" class="sidebar-link" target="_blank" rel="noopener">
+              <span class="sidebar-link-icon">🧩</span>
+              VS Code Marketplace
+            </a>
+            {% endif %}
+            {% if page.github_url %}
+            <a href="{{ page.github_url }}" class="sidebar-link" target="_blank" rel="noopener">
+              <span class="sidebar-link-icon">📦</span>
+              GitHub Repository
+            </a>
+            {% endif %}
+            {% if page.npm_package %}
+            <a href="https://www.npmjs.com/package/{{ page.npm_package }}" class="sidebar-link" target="_blank" rel="noopener">
+              <span class="sidebar-link-icon">📋</span>
+              npm: {{ page.npm_package }}
+            </a>
+            {% endif %}
+            {% if page.docs_url %}
+            <a href="{{ page.docs_url }}" class="sidebar-link" target="_blank" rel="noopener">
+              <span class="sidebar-link-icon">📖</span>
+              Documentation
+            </a>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Integrations card -->
+        <div class="sidebar-card">
+          <h3>Integrations</h3>
+          <div class="integration-chips">
+            {% if page.api_ml %}
+              <span class="badge badge-apiml">API ML</span>
+            {% endif %}
+            {% if page.vscode %}
+              <span class="badge badge-vscode">VS Code</span>
+            {% endif %}
+            {% if page.npm_package %}
+              <span class="badge badge-cli">Zowe CLI</span>
+            {% endif %}
+            {% if page.zowe_conformant %}
+              <span class="badge badge-conformant">Conformant</span>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Tags card -->
+        {% if page.tags %}
+        <div class="sidebar-card">
+          <h3>Tags</h3>
+          <div style="display:flex; flex-wrap:wrap; gap:6px;">
+            {% for tag in page.tags %}
+              <span class="tag">{{ tag }}</span>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Back link -->
+        <a href="{{ '/' | relative_url }}" class="btn btn-secondary btn-sm" style="width:100%; justify-content:center;">
+          ← All Solutions
+        </a>
+
+      </aside>
     </div>
-  </header>
-
-  <div class="solution-links">
-    {% if page.marketplace_url %}
-      <a href="{{ page.marketplace_url }}" class="btn btn-vscode" target="_blank" rel="noopener">
-        VS Code Marketplace
-      </a>
-    {% endif %}
-    {% if page.github_url %}
-      <a href="{{ page.github_url }}" class="btn btn-github" target="_blank" rel="noopener">
-        GitHub
-      </a>
-    {% endif %}
-    {% if page.npm_package %}
-      <a href="https://www.npmjs.com/package/{{ page.npm_package }}" class="btn btn-npm" target="_blank" rel="noopener">
-        npm
-      </a>
-    {% endif %}
-    {% if page.docs_url %}
-      <a href="{{ page.docs_url }}" class="btn btn-docs" target="_blank" rel="noopener">
-        Documentation
-      </a>
-    {% endif %}
   </div>
-
-  <div class="solution-body">
-    {{ content }}
-  </div>
-
-  {% if page.api_ml or page.vscode %}
-  <div class="solution-meta-table">
-    <h2>Integration Summary</h2>
-    <table>
-      <tr>
-        <th>Integration</th>
-        <th>Status</th>
-        <th>Details</th>
-      </tr>
-      {% if page.api_ml %}
-      <tr>
-        <td>API Mediation Layer</td>
-        <td><span class="badge badge-apiml">Yes</span></td>
-        <td>{{ page.api_ml_details | default: "Integrates with the Zowe API Gateway and uses token-based authentication." }}</td>
-      </tr>
-      {% endif %}
-      {% if page.vscode %}
-      <tr>
-        <td>VS Code Extension</td>
-        <td><span class="badge badge-vscode">Yes</span></td>
-        <td>
-          {% if page.marketplace_url %}
-            Available on the <a href="{{ page.marketplace_url }}" target="_blank" rel="noopener">VS Code Marketplace</a>
-            {% if page.marketplace_publisher %} under publisher <code>{{ page.marketplace_publisher }}</code>{% endif %}.
-          {% else %}
-            Available on the VS Code Marketplace.
-          {% endif %}
-        </td>
-      </tr>
-      {% endif %}
-      {% if page.zowe_conformant %}
-      <tr>
-        <td>Zowe Conformance</td>
-        <td><span class="badge badge-conformant">Conformant</span></td>
-        <td>{{ page.zowe_conformant }}</td>
-      </tr>
-      {% endif %}
-    </table>
-  </div>
-  {% endif %}
-</article>
+</div>

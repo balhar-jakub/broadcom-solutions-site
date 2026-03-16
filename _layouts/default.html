@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} — {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23CC092F'/><text x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='Roboto,sans-serif' font-weight='800' font-size='16' fill='white'>B</text></svg>">
+</head>
+<body>
+  <div class="site-wrapper">
+
+    <!-- ── Navigation ────────────────────────────────────── -->
+    <nav class="site-nav" id="site-nav" role="navigation" aria-label="Main navigation">
+      <div class="nav-inner">
+        <a href="{{ '/' | relative_url }}" class="nav-logo" aria-label="{{ site.title }} home">
+          <div class="nav-logo-mark">B</div>
+          <div class="nav-logo-text">
+            Mainframe Solutions
+            <span>by Broadcom</span>
+          </div>
+        </a>
+
+        <ul class="nav-links" role="list">
+          <li>
+            <a href="{{ '/' | relative_url }}"
+               {% if page.url == '/' or page.url == '/broadcom-solutions-site/' %}class="active"{% endif %}>
+              All Solutions
+            </a>
+          </li>
+          <li>
+            <a href="{{ '/api-ml/' | relative_url }}"
+               {% if page.url contains 'api-ml' %}class="active"{% endif %}>
+              API Mediation Layer
+            </a>
+          </li>
+          <li>
+            <a href="{{ '/vscode/' | relative_url }}"
+               {% if page.url contains 'vscode' %}class="active"{% endif %}>
+              VS Code
+            </a>
+          </li>
+          <li>
+            <a href="{{ '/about/' | relative_url }}"
+               {% if page.url contains 'about' %}class="active"{% endif %}>
+              About
+            </a>
+          </li>
+        </ul>
+
+        <div class="nav-cta">
+          <a href="https://docs.zowe.org" target="_blank" rel="noopener" class="btn-nav">
+            Zowe Docs
+          </a>
+        </div>
+
+        <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false" id="nav-hamburger">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- ── Main Content ───────────────────────────────────── -->
+    <main id="main-content">
+      {{ content }}
+    </main>
+
+    <!-- ── Footer ────────────────────────────────────────── -->
+    <footer class="site-footer" role="contentinfo">
+      <div class="footer-top">
+        <div class="content-width">
+          <div class="footer-grid">
+
+            <div class="footer-brand">
+              <a href="{{ '/' | relative_url }}" class="footer-logo-mark">
+                <div class="logo-box">B</div>
+                <div class="logo-text">
+                  Mainframe Solutions
+                  <span>by Broadcom</span>
+                </div>
+              </a>
+              <p>
+                A catalog of Broadcom solutions that integrate with the Zowe API
+                Mediation Layer or provide a VS Code extension for modern mainframe
+                development.
+              </p>
+            </div>
+
+            <div class="footer-col">
+              <h4>Catalog</h4>
+              <ul>
+                <li><a href="{{ '/' | relative_url }}">All Solutions</a></li>
+                <li><a href="{{ '/api-ml/' | relative_url }}">API Mediation Layer</a></li>
+                <li><a href="{{ '/vscode/' | relative_url }}">VS Code Extensions</a></li>
+                <li><a href="{{ '/about/' | relative_url }}">About</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-col">
+              <h4>Resources</h4>
+              <ul>
+                <li><a href="https://docs.zowe.org" target="_blank" rel="noopener">Zowe Docs</a></li>
+                <li><a href="https://github.com/zowe/api-layer" target="_blank" rel="noopener">API Layer (GitHub)</a></li>
+                <li><a href="https://marketplace.visualstudio.com/publishers/broadcomMFD" target="_blank" rel="noopener">VS Code Marketplace</a></li>
+                <li><a href="https://www.npmjs.com/~broadcom-mbauto" target="_blank" rel="noopener">npm Packages</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-col">
+              <h4>Broadcom</h4>
+              <ul>
+                <li><a href="https://www.broadcom.com/products/mainframe" target="_blank" rel="noopener">Mainframe Portfolio</a></li>
+                <li><a href="https://techdocs.broadcom.com/us/en/ca-mainframe-software/devops/code4z/2-0.html" target="_blank" rel="noopener">Code4z TechDocs</a></li>
+                <li><a href="https://github.com/BroadcomMFD" target="_blank" rel="noopener">BroadcomMFD (GitHub)</a></li>
+                <li><a href="https://www.openmainframeproject.org/our-projects/zowe-conformance-program/" target="_blank" rel="noopener">Zowe Conformance</a></li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="content-width">
+          <div class="footer-bottom-inner">
+            <span class="footer-copyright">
+              &copy; {{ 'now' | date: "%Y" }} Broadcom Inc. All rights reserved.
+              This catalog is independently maintained for reference purposes.
+            </span>
+            <nav class="footer-legal" aria-label="Legal links">
+              <a href="https://www.broadcom.com/company/legal/privacy-policy" target="_blank" rel="noopener">Privacy</a>
+              <a href="https://www.broadcom.com/company/legal/terms-of-use/" target="_blank" rel="noopener">Terms</a>
+              <a href="{{ '/about/' | relative_url }}">About</a>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div><!-- /.site-wrapper -->
+
+  <script>
+    // Sticky nav: add .scrolled class on scroll
+    (function() {
+      var nav = document.getElementById('site-nav');
+      function onScroll() {
+        if (window.scrollY > 40) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+  </script>
+</body>
+</html>
